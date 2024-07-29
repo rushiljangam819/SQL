@@ -1,0 +1,73 @@
+show databases;
+use pathalogylab;
+create table patient (patient_id int primary key,patient_name char(40),patient_age int,patient_gender char(6),patient_email char(20))
+select * from patient;
+insert into patient values(01,"Rushil",22,"Male","rushil@gmai.com");
+insert into patient values(02,"Raj",11,"Male","abc@gmai.com");
+insert into patient values(03,"Raju",24,"Male","qwe@gmai.com");
+insert into patient values(04,"Atharvs",12,"Male","rert@gmai.com");
+insert into patient values(05,"Mrunali",14,"Female","mru@gmai.com");
+insert into patient values(06,"Deepali",12,"Female","deep@gmai.com");
+create table blood_test (test_id int primary key,test_name char(20),lowest_range float,highest_range float);
+insert into blood_test(test_id,test_name,lowest_range,highest_range) 
+values (01,"HB",10,16),
+(02,"RBC",12,20),
+(03,"WBC",10,21),
+(04,"ABC",7,14),
+(05,"HBC",5,12);
+select * from blood_test;
+create table report_table(report_id int primary key,patient_id int,test_id int,foreign key (patient_id) references patient(patient_id),foreign key (test_id) references blood_test(test_id));
+alter table report_table add test_result float;
+select * from report_table;
+insert into report_table(report_id,patient_id,test_id,test_result)
+values (01,02,03,14),
+(02,01,01,12),
+(03,03,02,21),
+(04,02,05,14);
+show all records from patient table 
+select * from patient;
+How many record patient table has
+select patient_id from patient;
+select max(patient_id) from patient;
+
+MIN() - returns the smallest value within the selected column
+MAX() - returns the largest value within the selected column
+COUNT() - returns the number of rows in a set
+SUM() - returns the total sum of a numerical column
+AVG() - returns the average value of a numerical column
+
+select count(patient_id) from patient;
+select * from patient where patient_gender="Female";
+select * from patient where patient_age>10 and patient_age<15;
+select * from patient where patient_age between 10 and 15;
+select * from patient order by patient_age;
+select * from patient order by patient_age desc;
+select * from patient inner join blood_test;
+(INNER) JOIN: Returns records that have matching values in both tables
+LEFT (OUTER) JOIN: Returns all records from the left table, and the matched records from the right table
+RIGHT (OUTER) JOIN: Returns all records from the right table, and the matched records from the left table
+FULL (OUTER) JOIN: Returns all records when there is a match in either left or right table
+
+ select * from report_table;
+ 
+ select * from patient where patient.patient_id not in (select patient_id from report_table);
+ select * from patient where patient_name in ("Mrunali");
+create database student;
+use student;
+create table student(student_id int primary key,student_name char(20));
+insert into student(student_id,student_name) values (01,"Rushil"),
+(02,"Mrunali"),
+(03,"Mau"),
+(04,"Manya"),
+(05,"YetToCome");
+select * from student;
+create table subject (subject_id int primary key,subject_name char(20));
+drop table subject;
+create table subject (subject_id int primary key,subject_name char(20),student_id int,foreign key (student_id) references student(student_id))
+select * from subject;
+insert into subject (subject_id,subject_name,student_id) values (11,"Maths",01),
+(12,"Science",01),
+(13,"History",02),
+(14,"Geography",03),
+(15,"CS",02),
+(16,"DBMS",04);
